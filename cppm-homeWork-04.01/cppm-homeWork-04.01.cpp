@@ -8,34 +8,26 @@ class Adresses
 {
 public:
 
-	std::string read_to_file(int N, std::ifstream &fin)
-	{
-
-		fin >> Adresses::city;
-		fin >> Adresses::street;
-		fin >> Adresses::num_house;
-		fin >> Adresses::num_kv;
-
-		std::string num_house1 = std::to_string(num_house);
-		std::string num_kv1 = std::to_string(num_kv);
-
-		std::string adres = city + ", " + street + ", " + num_house1 + ", " + num_kv1;
-
-		return adres;
-			
-
-
+	void in_city(std::string city) {
+		this->city = city;
 	}
-	
-	void write_to_file(int N, std::ofstream &fout, std::string arr)
-	{
 
-		for (int j = N-1; j >= 0; j--) {
+	void in_street(std::string street) {
+		this->street = street;
+	}
 
-			fout << arr[j] << std::endl;
-		}
+	void in_num_house (int num_house) {
+		this->num_house = num_house;
+	}
 
-		
+	void in_num_kv(int num_kv) {
+		this->num_kv = num_kv;
+	}
+
+	std::string get_output(std::string city, std::string street, int num_house, int num_kv) {
+
+		return city + ", " + street + ", " + std::to_string(num_house) + ", " + std::to_string(num_kv);
+
 	}
 
 	int setter(int N) {
@@ -70,6 +62,10 @@ int main()
 	Adresses adres;
 
 	int N;
+	std::string city = "Неизвестно";
+	std::string street = "Неизвестно";
+	int num_house = 0;
+	int num_kv = 0;
 	
 	std::ifstream fin("in.txt");
 	std::ofstream fout("out.txt");
@@ -86,8 +82,16 @@ int main()
 
 		for (int i = 0; i < N; i++)
 		{
-			adress = adres.read_to_file(N, fin);
-			arr[i] = adress;
+			fin >> city;
+			adres.in_city(city);
+			fin >> street;
+			adres.in_street(street);
+			fin >> num_house;
+			adres.in_num_house(num_house);
+			fin >> num_kv;
+			adres.in_num_kv(num_kv);
+
+			arr[i] = adres.get_output(city, street, num_house, num_kv);
 			
 		}
 
