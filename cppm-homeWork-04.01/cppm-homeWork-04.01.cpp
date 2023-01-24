@@ -24,31 +24,14 @@ public:
 		this->num_kv = num_kv;
 	}
 
-	std::string get_output(std::string city, std::string street, int num_house, int num_kv) {
+	std::string get_output() {
 
 		return city + ", " + street + ", " + std::to_string(num_house) + ", " + std::to_string(num_kv);
 
 	}
 
-	int setter(int N) {
-
-		if (N > 0) {
-			this->N = N;
-			return N;
-			
-		}
-		else {
-			std::cout << "Размерность некоректна!";
-			return -1;
-			
-		}
-
-	}
-	
-
 private:
 
-	int N = 0;
 	std::string city = "Неизвестно";
 	std::string street = "Неизвестно";
 	int num_house = 0;
@@ -59,8 +42,6 @@ private:
 
 int main()
 {
-	Adresses adres;
-
 	int N;
 	std::string city = "Неизвестно";
 	std::string street = "Неизвестно";
@@ -73,9 +54,15 @@ int main()
 	if (fin.is_open() && fout.is_open()) {
 
 		fin >> N;
-		N = adres.setter(N);
+		if (N > 0) {
+			N = N;
+		}
+		else {
+			std::cout << "Размерность некоректна!";
+			return -1;
+		}
 
-		std::string* arr = new std::string[N]();
+		Adresses* arr = new Adresses[N]();
 		std::string adress;
 
 		fout << N << std::endl;
@@ -83,21 +70,17 @@ int main()
 		for (int i = 0; i < N; i++)
 		{
 			fin >> city;
-			adres.in_city(city);
+			arr[i].in_city(city);
 			fin >> street;
-			adres.in_street(street);
+			arr[i].in_street(street);
 			fin >> num_house;
-			adres.in_num_house(num_house);
+			arr[i].in_num_house(num_house);
 			fin >> num_kv;
-			adres.in_num_kv(num_kv);
-
-			arr[i] = adres.get_output(city, street, num_house, num_kv);
+			arr[i].in_num_kv(num_kv);
 			
 		}
 
-		//adres.write_to_file(N, fout, *arr);
-
-		for (int j = N-1; j >= 0; j--) { fout << arr[j] << std::endl; }
+		for (int j = N-1; j >= 0; j--) { fout << arr[j].get_output() << std::endl; }
 
 		delete[] arr;
 
