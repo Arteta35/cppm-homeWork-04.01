@@ -54,10 +54,8 @@ int main()
 	if (fin.is_open() && fout.is_open()) {
 
 		fin >> N;
-		if (N > 0) {
-			N = N;
-		}
-		else {
+		if (N <= 0) {
+
 			std::cout << "Размерность некоректна!";
 			return -1;
 		}
